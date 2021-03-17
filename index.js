@@ -28,4 +28,16 @@ const app4 = new Vue({
       { text: 'Criar algo incrível' }
     ]
   }
+});
+
+const app5 = new Vue({
+  el: '#app-5',
+  data: {
+    message: 'Bora inverter essa mensagem',
+  },
+  methods: {
+    reverseMessage: function () {
+      this.message = this.message.split('').reverse().join('');
+    }
+  }
 })
