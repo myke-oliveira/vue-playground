@@ -13,13 +13,12 @@
 </head>
 <body>
   <div id="app">
-    <img :src="imgUrl" :alt="imgTitle" :title="imgTitle" srcset="">
+    <img :src="imgUrl" :alt="imgTitle" :title="imgTitle">
   </div>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script>
-    const apiKey = '3dAtm77YLnkPibdBQqmfFx5zUyjca6VVacnfNT2g';
-    const url = `https://api.nasa.gov/planetary/apod?api_key=${apiKey}`;
+    
 
     const vm = new Vue({
       el: '#app',
@@ -28,19 +27,20 @@
         imgTitle: '',
       },
       methods: {
-        process: function () {
-          this.submitted = true;
+        fetchApod: function () {
+          const apiKey = '3dAtm77YLnkPibdBQqmfFx5zUyjca6VVacnfNT2g';
+          const url = `https://api.nasa.gov/planetary/apod?api_key=${apiKey}`;
+
+          axios.get(url)
+            .then((response) => {
+              this.imgUrl = response.data.url;
+              this.imgTitle = response.data.title;
+            })
         }
       }
     });
 
-    axios.get(url)
-      .then(function (response) {
-        console.clear();
-        console.log(response)
-        vm.imgUrl = response.data.url;
-        vm.imgTitle = response.data.title;
-      })
+    vm.fetchApod();
   </script>
 </body>
 </html>
