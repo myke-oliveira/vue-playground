@@ -17,18 +17,34 @@
       <form class="mt-5">
         <div class="form-group">
           <label for="email">E-mail:</label>
-          <input type="email" :value="email" name="email" class="form-control form-control-lg">
+          <input
+            type="email"
+            v-model="email"
+            name="email"
+            class="form-control form-control-lg"
+          >
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button
+          type="submit"
+          class="btn btn-primary"
+          v-on:click.prevent="process"
+        >
+        Submit
+      </button>
       </form>
     </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <script>
-    new Vue({
+    const vm = new Vue({
       el: '#app',
       data: {
         email: 'mykeapo@gmail.com'
+      },
+      methods: {
+        process: function () {
+          console.log(this.email);
+        }
       }
     })
   </script>
