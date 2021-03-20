@@ -27,7 +27,7 @@
         <button
           type="submit"
           class="btn btn-primary"
-          v-on:click.prevent="process"
+          @click.prevent="process"
         >
         Submit
       </button>
@@ -43,7 +43,7 @@
       },
       methods: {
         process: function () {
-          console.log(this.email);
+          alert('Submited ' + this.email);
         }
       }
     })
