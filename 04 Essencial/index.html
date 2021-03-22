@@ -18,13 +18,23 @@
         <h2 class="card-header">Near-Earth Objects</h2>
         <table class="table">
           <thead class="thead-light">
+            <th>#</th>
             <th>Name</th>
             <th>Close Approach Date</th>
+            <th>Miss Distance</th>
           </thead>
           <tbody V-cloak>
-            <tr v-for="asteroid in asteroids">
+            <tr v-for="(asteroid, index) in asteroids">
+              <td>{{index + 1}}</td>
               <td>{{asteroid.name}}</td>
               <td>{{getCloseApprochDate(asteroid)}}</td>
+              <td>
+                <ul v-if="asteroid.close_approach_data.length > 0">
+                  <li v-for="(distance, key) in asteroid.close_approach_data[0].miss_distance">
+                    {{key}}: {{distance}}
+                  </li>
+                </ul>
+              </td>
             </tr>
           </tbody>
         </table>
