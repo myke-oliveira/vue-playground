@@ -10,6 +10,16 @@
     rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
     crossorigin="anonymous"
   >
+  <style>
+    [v-cloak] {
+      display: none;
+    }
+
+    .highlight {
+      border: solid 3px red;
+      color: red !important;
+    }
+  </style>
 </head>
 <body>
   <div id="app">
@@ -29,7 +39,7 @@
             <th>Remove</th>
           </thead>
           <tbody V-cloak>
-            <tr v-for="(asteroid, index) in asteroids" :key="asteroid.neo_reference_id" :style="getRowStyle(asteroid)">
+            <tr v-for="(asteroid, index) in asteroids" :key="asteroid.neo_reference_id" :class="{highlight: isMissingData(asteroid)}">
               <td>{{index + 1}}</td>
               <td>{{asteroid.name}}</td>
               <td>{{getCloseApprochDate(asteroid)}}</td>
@@ -84,7 +94,6 @@
           const url = `https://api.nasa.gov/neo/rest/v1/neo/browse?api_key=${apiKey}`;
           axios.get(url)
             .then((response) => {
-              console.log(response.data);
               this.asteroids = response.data.near_earth_objects.slice(0, 10);
             })
         },
@@ -97,13 +106,8 @@
         remove: function (index) {
           this.asteroids.splice(index, 1)
         },
-        getRowStyle: function (asteroid) {
-          if (asteroid.close_approach_data.length <= 0) {
-            return {
-              border: 'solid 3px red',
-              color: 'red'
-            };
-          }
+        isMissingData: function (asteroid) {
+          return asteroid.close_approach_data.length <= 0;
         }
       }
     });
